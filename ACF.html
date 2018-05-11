@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Bíblia ACF - versão WEB - Em testes</title>
+    <style>
+        body {
+            background-color: #e4e4a1;
+        }
+        p#foot {
+            position: fixed;
+            bottom: 7px;
+            margin-left: 50%;
+            color: darkgreen;
+            font-size: 0.8em;
+        }
+    </style>
+
+    <script>
+        // FONTES:
+        // https://www.w3schools.com/js/tryit.asp?filename=try_dom_select_option
+        // https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onchange
+        // https://stackoverflow.com/questions/18784920/how-to-add-dom-element-script-to-head-section
+        // https://stackoverflow.com/questions/31585832/append-script-tag-to-body
+        // https://stackoverflow.com/questions/13121948/dynamically-add-script-tag-with-src-that-may-include-document-write
+        // https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_insertbefore
+        // https://stackoverflow.com/questions/6617212/add-regular-button-inside-form-that-does-not-perform-a-submit
+
+        function defineLivro() {
+            var livro = document.getElementById("opcao").value;
+            document.getElementById("aqui").innerHTML = livro;
+            var script = document.createElement('script');
+            script.src = livro + '.js';
+            document.head.appendChild(script);
+        };
+
+        function mostra() {
+            var cp = parseInt(document.getElementById("capit").value);
+            var vs = parseInt(document.getElementById("vs").value);
+            document.getElementById("aqui").innerHTML = livro[cp][vs];
+            document.getElementById("foot").innerHTML = "Qualquer correção envie um email a heliogiroto@me.com";
+        };
+
+    </script>
+</head>
+
+<body>
+    <h1>Bíblia Sagrada</h1>
+    <h3>ACF - Almeida Corrigida Fiel</h3>
+    <form>
+        <select id="opcao" onchange="defineLivro()">
+            <option value="">Escolha o livro</option>	
+            <option value="Gn">Gênesis</option>
+            <option value="Ex">Êxodo</option>
+            <option value="Lv">Levítico</option>
+            <option value="Nm">Números</option>
+            <option value="Dt">Deuteronômio</option>
+            <option value="Js">Josué</option>
+            <option value="Jz">Juízes</option>
+            <option value="Rt">Rute</option>
+            <option value="1Sm">1 Samuel</option>
+            <option value="2Sm">2 Samuel</option>
+            <option value="1Rs">1 Reis</option>
+            <option value="2Rs">2 Reis</option>
+            <option value="1Cr">1 Crônicas</option>
+            <option value="2Cr">2 Crônicas</option>
+            <option value="Ed">Esdras</option>
+            <option value="Ne">Neemias</option>
+            <option value="Et">Ester</option>
+            <option value="Jó">Jó</option>
+            <option value="Sl">Salmos</option>
+            <option value="Pv">Provérbios</option>
+            <option value="Ec">Eclesiastes</option>
+            <option value="Ct">Cânticos</option>
+            <option value="Is">Isaías</option>
+            <option value="Jr">Jeremias</option>
+            <option value="Lm">Lamentações</option>
+            <option value="Ez">Ezequiel</option>
+            <option value="Dn">Daniel</option>
+            <option value="Os">Oséias</option>
+            <option value="Jl">Joel</option>
+            <option value="Am">Amós</option>
+            <option value="Ob">Obadias</option>
+            <option value="Jn">Jonas</option>
+            <option value="Mq">Miquéias</option>
+            <option value="Na">Naum</option>
+            <option value="Hc">Habacuque</option>
+            <option value="Sf">Sofonias</option>
+            <option value="Ag">Ageu</option>
+            <option value="Zc">Zacarias</option>
+            <option value="Ml">Malaquias</option>
+            <option value="Mt">Mateus</option>
+            <option value="Mc">Marcos</option>
+            <option value="Lc">Lucas</option>
+            <option value="Jo">João</option>
+            <option value="At">Atos</option>
+            <option value="Rm">Romanos</option>
+            <option value="1Co">1 Coríntios</option>
+            <option value="2Co">2 Coríntios</option>
+            <option value="Gl">Gálatas</option>
+            <option value="Ef">Efésios</option>
+            <option value="Fp">Filipenses</option>
+            <option value="Cl">Colossenses</option>
+            <option value="1Ts">1 Tessalonicenses</option>
+            <option value="2Ts">2 Tessalonicenses</option>
+            <option value="1Tm">1 Timóteo</option>
+            <option value="2Tm">2 Timóteo</option>
+            <option value="Tt">Tito</option>
+            <option value="Fm">Filemom</option>
+            <option value="Hb">Hebreus</option>
+            <option value="Tg">Tiago</option>
+            <option value="1Pe">1 Pedro</option>
+            <option value="2Pe">2 Pedro</option>
+            <option value="1Jo">1 João</option>
+            <option value="2Jo">2 João</option>
+            <option value="3Jo">3 João</option>
+            <option value="Jd">Judas</option>
+            <option value="Ap">Apocalipse</option>        
+         </select>
+
+        <br><br>
+
+    <label>Capítulo: </label>
+    <input id="capit" type="text" />
+    <label>Versículo: </label>
+    <input id="vs" type="text" />
+    <br><br>
+    <button type="button" onclick="mostra()">Busca!</button>
+    </form>
+
+    <p id="aqui">...</p>
+    <p id="foot"></p>
+
+</body>
+
+</html>
+
+<!-- Autor: Hélio Giroto = https://github.com/HelioGiroto -->
