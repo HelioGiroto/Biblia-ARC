@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Bíblia ACF</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        body {
+            background-color: #95A5A6;
+        }
+
+        header {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: #34495E;
+        }
+
+        div.areaLogo {
+            text-align: center;
+            color: #F1C40F;
+        }
+
+        div.areaConsulta {
+            width: 60%;
+        }
+
+        input.barraConsulta {
+            margin: 5px;
+            padding: 2px;
+            width: 80%;
+            font-size: 1.3em;
+            color: gray;
+        }
+
+        button.busca {
+            padding: 1.5px;
+            font-size: 1.3em;
+            background-color: slategray;
+            color: white;
+            padding: 0 10px;
+        }
+
+        div.menu {
+            width: 10%;
+        }
+
+        div.meio {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+        }
+
+        section {
+            width: 100%;
+            padding: 20px;
+            padding-top: 40px;
+        }
+
+        #escolha {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+        }
+
+        select {
+            padding: 5px 15px;
+            font-size: 1.2em;
+            margin: 0 5px;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin: 0 5px;
+            vertical-align: middle;
+            padding-top: 5px;
+        }
+
+        .formtxt {
+            width: 90px;
+            padding: 5px 0;
+            margin: 0 5px;
+            font-size: 1.2em;
+        }
+
+        button.passagem {
+            padding: 4px 25px;
+            vertical-align: bottom;
+            font-size: 1.1em;
+            margin: 0 5px;
+            background-color: slategray;
+            color: white;
+        }
+
+        div#prox-ant {
+            display: none;
+        }
+
+        button.prox-ant {
+            margin-top: 5px;
+            font-size: 1.2em;
+            padding: 5px 5px;
+        }
+
+        #aqui {
+            font-size: 1.3em;
+            padding-right: 5px;
+        }
+
+        #resultado {
+            font-size: 1.1em;
+            padding: 20px;
+        }
+        
+        aside#xref {
+            display: none;
+            min-height: 100vh;
+            width: 40%;
+            background-color: whitesmoke;
+            padding: 30px 15px;
+        }
+
+        button.ref {
+            margin: 7px 0;
+            background-color: slategray;
+            color: white;
+            padding: 5px;
+        }
+
+        #tsk {
+            font-size: 1.2em;
+            padding: 5px 0;
+            margin-top: 10px;
+        }
+
+        #obsTsk {
+            font-size: 0.7em;
+            text-align: center;
+        }
+
+        footer {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            background-color: #34495E;
+            color: aliceblue;
+            font-size: 0.8em;
+            text-align: center;
+            padding: 5px;
+        }
+
+    </style>
+
+    <script>
+        function defineLivro() { // Essa função abre o arq.js correspondente apenas do livro solicitado.
+            livro = document.getElementById("opcao").value;
+            var script = document.createElement('script');
+            script.src = livro + '.js';
+            document.head.appendChild(script);
+            // cp = 0;
+        };
+
+        function inicio() {
+            cp = parseInt(document.getElementById("capit").value); // Não coloquei var antes das variáveis aqui p/ que fossem variávisl GLOBAIS!
+            vs = parseInt(document.getElementById("vs").value);
+            mostrar();
+        };
+
+        function mostrar() {
+            document.getElementById("prox-ant").style.display = "block"; // Faz aparecer os botões PROX - ANTERIOR
+            document.getElementById("xref").style.display = "block";
+            // document.getElementById("foot").innerHTML = "* Qualquer correção envie um email a heliogiroto@me.com";
+            document.getElementById("capit").value = cp;
+            document.getElementById("escolha").style.flexFlow = "column wrap";
+            document.getElementById("opcao").style.marginBottom = "15px";
+            document.getElementById("opcao").style.width = "50%";
+
+            if (isNaN(cp) || cp == 0) {
+                document.getElementById("aqui").innerHTML = livro[0][0];
+                cp = 0;
+                document.getElementById("passagem").innerHTML = "Introdução do livro: "; // título
+            } else if (isNaN(vs) || vs == 0) { // em vez de vs era: passagem[1]
+                document.getElementById("passagem").innerHTML = document.getElementById("opcao").value + " " + cp; // título da psssagem
+                document.getElementById("aqui").innerHTML = livro[cp].join("</li><li>");
+            } else {
+                document.getElementById("passagem").innerHTML = document.getElementById("opcao").value + " " + cp + ":" + vs; // título da psssagem   
+                document.getElementById("aqui").innerHTML = livro[cp][vs];
+            }
+        };
+
+        function prox() {
+            cp++;
+            vs = 0;
+            if (cp > livro.length - 1) {
+                cp = 0;
+            }
+            mostrar();
+        };
+
+        function ant() {
+            cp--;
+            vs = 0;
+            if (cp < 0) {
+                cp = livro.length - 1;
+            }
+            mostrar();
+        };
+
+        function buscarPalavra() {
+            ocorrencias = [];
+            if (consulta[0] == "á" || consulta[0] == "à" || consulta[0] == "â" || consulta[0] == "ã" || consulta[0] == "é" || consulta[0] == "ê" || consulta[0] == "í" || consulta[0] == "ó" || consulta[0] == "ô" || consulta[0] == "õ" || consulta[0] == "ú") {
+                consulta = " " + consulta;
+            }
+
+            var regex = new RegExp("\\b" + consulta + "\\b", 'gi');
+
+            versiculos.forEach(function(item, nro) {
+                if (item[1].match(regex)) {
+                    item = item.join(" - ");
+                    ocorrencias.push(item);
+                }
+            });
+        };
+
+        function buscarFrase() {
+            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de versiculos do arq acf.js!!!)
+            ocorrencias = []; // esvazia o array ocorrencias, pq vai receber novos valores...
+            palavra = palavra.slice(1); // corta o primeira palavra da frase, pq já que foi pesquisada.
+            consulta = palavra[0]; // e pega a próxima palavra (que se torna a núm 0)
+            if (consulta[0] == "á" || consulta[0] == "à" || consulta[0] == "â" || consulta[0] == "ã" || consulta[0] == "é" || consulta[0] == "ê" || consulta[0] == "í" || consulta[0] == "ó" || consulta[0] == "ô" || consulta[0] == "õ" || consulta[0] == "ú") {
+                consulta = " " + consulta;
+            }
+
+            var regex = new RegExp("\\b" + consulta + "\\b", 'gi');
+
+            qtasAchou = filtrados.length;
+            for (x = 0; x < qtasAchou; x++) {
+                if (filtrados[x].match(regex)) ocorrencias.push(filtrados[x]);
+            }
+        };
+
+        function finaliza() {
+            document.getElementById("resultado").style.backgroundColor = "white";
+            var qtde = ocorrencias.length;
+            // Abaixo declara de novo a vaiável pq na funçao consultar() sofre muitas modificações. Replace caso tenha ponto, +, *, ^ (regex):
+            var palavra = document.getElementById("consulta").value.replace('.', '').replace('^', '').replace('*', '').replace('+', '');
+            document.getElementById("resultado").innerHTML = "<h3><strong>Encontrado em " + qtde + " versículo(s):</strong></h3><hr>" + ocorrencias.join(" <br>").replace(new RegExp(palavra, 'gi'), '<b>' + palavra + '</b>'); // 'g' - para replace todas ocorrências... antes era:
+            // ...replace(consulta, '<b>' + consulta + '</b>');
+            document.getElementById('resultado').scrollIntoView(); // Rola página até o id onde está o resultado da consulta...
+        };
+
+        function consultar() { // Aqui é disparado ao pressionar o botão BUSCAR de consultar:
+            // OPÇÕES DE COMO REALIZAR BUSCAS (COM REGEX):
+            // céu (sem plural)
+            // céu.(somente plural ?)
+            // céu\s (céu seguido de espaço. Sem vírgula, pontos...)
+            // céu.+ (para céu e céus, com vírgula ou ponto depois - + completa )
+            // ^Jesus (que começa com Jesus)
+            // just.* (derivados: justo, justiça, justificados...)
+
+            palavra = document.getElementById("consulta").value.toLowerCase() // captura o que foi digitado no formulário
+            if (palavra.indexOf(" ") > 0) { // se tem algum espaço a partir da posição 1 (>0...) é pq é frase!
+                palavra = palavra.split(" "); // então faz da palavra buscada um array
+                qtasPalavras = palavra.length; // calcula qtas palavras há nessa frase para saber qtos loops realizará para chamar a função buscarFrase().
+                consulta = palavra[0]; // começa da primeira palavra da frase, i é., a palavra[0]
+                buscarPalavra(); // então abre função de buscar apenas uma palavra.
+                for (ciclo = 2; ciclo <= qtasPalavras; ciclo++) buscarFrase(); // Retornará à função buscaFrase() o nro de vezes de palavras contidas na frase que o usuário digitou no formulário em HTML!!! (Uma espécie de GOTO manual!)
+                finaliza(); // Terminado de ir X vezes à função buscaFrase(), agora terminará o programa indo à finaliza().
+            } else { // Caso no tenha uma frase, mas apenas uma palavra se tenha digitado para buscar.
+                consulta = palavra;
+                buscarPalavra();
+                finaliza();
+            }
+        };
+
+        function xref() {
+            referencias = [];
+            var passagem = document.getElementById("passagem").innerHTML;
+            var regex = new RegExp("\\b" + passagem + "\\b");
+            tsk.forEach(function(item, nro) {
+                if (item[0].match(regex)) {
+                    item = item.join(" - "); // O primeiro array (sub-array) é unido (juntado) com um hifen
+                    referencias.push(item);
+                }
+            });
+            document.getElementById("tsk").innerHTML = "<p>" + referencias.join("<hr><br>") + "</p>"; // O 2°array (o array-linha) é unido por <hr> 
+        };
+
+        function abreVs(event) {
+            //  Se pressionar CTRL:
+            if (event.keyCode == 17) {
+                livroAnterior = document.getElementById("opcao").value; // Faz uma "cópia" do livro que estava aberto para ao sair dessa função, ele volte para lá!!!
+                capAnterior = document.getElementById("capit").value; // Faz "cópia" do capítulo que estava....
+                var copiado = document.getSelection().toString().trim(); // Pega a seleção...
+                fatia = copiado.split(" "); // "corta" em uma array...
+                livro = fatia[0]; // pega a primeiro membro do array que é o nome do livro.
+
+                var script = document.createElement('script'); // Abre o livro
+                script.src = livro + '.js';
+                document.head.appendChild(script);
+
+                fatia2 = fatia[1].split(":"); // Pega a "segunda fatia" (membro) do array que é o cap:vs e divide tb
+                cp = parseInt(fatia2[0]); // Cap. são os 1os. nros
+                vs = parseInt(fatia2[1]); // Vs são os 2os. nros.
+
+                document.getElementById("passagem").innerHTML = livro + " " + cp + ":" + vs;
+                passagem = document.getElementById("passagem").innerHTML;
+                var regex = new RegExp("\\b" + passagem + "\\b", 'gi');
+                versiculos.forEach(function(item, nro) {
+                    if (item[0].match(regex)) {
+                        item = item.join(" - ");
+                        document.getElementById("aqui").innerHTML = item;
+                    }
+                });
+                document.getElementById('topo').scrollIntoView();       // Rola página até o topo da página...
+                document.getElementById("opcao").value = livroAnterior; // restaura o valor do nome do livro que estava aberto antes de abreVs();
+                cp = capAnterior; // restaura o valor do cap. que estava antes.
+                defineLivro(); // Abrirá o livro que esteja em valor #opcao (id) - i.é, de livroAnterior !!!
+            }
+        };
+
+    </script>
+</head>
+
+<body onkeydown="abreVs(event)" id="topo">
+
+    <div class="conteudo">
+        <header>
+            <div class="areaLogo">
+                <h1>A Bíblia Sagrada</h1>
+            </div>
+            <div class="areaConsulta">
+                <center>
+                    <input class="barraConsulta" id="consulta" type="text" onfocus="this.value=''; this.style.color='black'" value="Procure aqui uma frase ou palavra na Bíblia..." />
+                    <button class="busca" type="button" onclick="consultar()">Busca!</button>
+                </center>
+            </div>
+            <div></div>
+        </header>
+
+        <div class="meio">
+            <section>
+                <div class="escolha" id="escolha">
+                    <div>
+                        <select id="opcao" onchange="defineLivro()">
+                            <option value="">Escolha um livro...</option>	
+                            <option value="Gn">Gênesis</option>
+                            <option value="Ex">Êxodo</option>
+                            <option value="Lv">Levítico</option>
+                            <option value="Nm">Números</option>
+                            <option value="Dt">Deuteronômio</option>
+                            <option value="Js">Josué</option>
+                            <option value="Jz">Juízes</option>
+                            <option value="Rt">Rute</option>
+                            <option value="1Sm">1 Samuel</option>
+                            <option value="2Sm">2 Samuel</option>
+                            <option value="1Rs">1 Reis</option>
+                            <option value="2Rs">2 Reis</option>
+                            <option value="1Cr">1 Crônicas</option>
+                            <option value="2Cr">2 Crônicas</option>
+                            <option value="Ed">Esdras</option>
+                            <option value="Ne">Neemias</option>
+                            <option value="Et">Ester</option>
+                            <option value="Jó">Jó</option>
+                            <option value="Sl">Salmos</option>
+                            <option value="Pv">Provérbios</option>
+                            <option value="Ec">Eclesiastes</option>
+                            <option value="Ct">Cânticos</option>
+                            <option value="Is">Isaías</option>
+                            <option value="Jr">Jeremias</option>
+                            <option value="Lm">Lamentações</option>
+                            <option value="Ez">Ezequiel</option>
+                            <option value="Dn">Daniel</option>
+                            <option value="Os">Oséias</option>
+                            <option value="Jl">Joel</option>
+                            <option value="Am">Amós</option>
+                            <option value="Ob">Obadias</option>
+                            <option value="Jn">Jonas</option>
+                            <option value="Mq">Miquéias</option>
+                            <option value="Na">Naum</option>
+                            <option value="Hc">Habacuque</option>
+                            <option value="Sf">Sofonias</option>
+                            <option value="Ag">Ageu</option>
+                            <option value="Zc">Zacarias</option>
+                            <option value="Ml">Malaquias</option>
+                            <option value="Mt">Mateus</option>
+                            <option value="Mc">Marcos</option>
+                            <option value="Lc">Lucas</option>
+                            <option value="Jo">João</option>
+                            <option value="At">Atos</option>
+                            <option value="Rm">Romanos</option>
+                            <option value="1Co">1 Coríntios</option>
+                            <option value="2Co">2 Coríntios</option>
+                            <option value="Gl">Gálatas</option>
+                            <option value="Ef">Efésios</option>
+                            <option value="Fp">Filipenses</option>
+                            <option value="Cl">Colossenses</option>
+                            <option value="1Ts">1 Tessalonicenses</option>
+                            <option value="2Ts">2 Tessalonicenses</option>
+                            <option value="1Tm">1 Timóteo</option>
+                            <option value="2Tm">2 Timóteo</option>
+                            <option value="Tt">Tito</option>
+                            <option value="Fm">Filemom</option>
+                            <option value="Hb">Hebreus</option>
+                            <option value="Tg">Tiago</option>
+                            <option value="1Pe">1 Pedro</option>
+                            <option value="2Pe">2 Pedro</option>
+                            <option value="1Jo">1 João</option>
+                            <option value="2Jo">2 João</option>
+                            <option value="3Jo">3 João</option>
+                            <option value="Jd">Judas</option>
+                            <option value="Ap">Apocalipse</option>        
+                         </select>
+                    </div>
+
+                    <div>
+                        <label>Capítulo: </label>
+                        <input class="formtxt" id="capit" type="text" />
+                        <label>Versículo: </label>
+                        <input class="formtxt" id="vs" type="text" />
+                        <button class="passagem" type="button" onclick="inicio()">Abre!</button>
+                    </div>
+                </div>
+
+                <div id="prox-ant">
+                    <br>
+                    <center>
+                        <button class="prox-ant" onclick="ant()">&lt;&lt; Anterior</button>
+                        <button class="prox-ant" onclick="prox()">Próximo &gt;&gt;</button>
+                        <br><br>
+                        <h2 id="passagem"></h2>
+                    </center>
+                </div>
+
+                <br>
+                <div class="resultados">
+                    <ol id="aqui"></ol>
+                    <br>
+                    <p id="resultado"></p>
+                </div>
+
+            </section>
+
+            <aside id="xref">
+                <center>
+                    <h2>Referências Cruzadas - TSK</h2>
+                    <button class="ref" type="button" onclick="xref()">Ver Refs.</button>
+                </center>
+                <p id="obsTsk"><strong>(Para ler os versículos abaixo) </strong><br>Marque uma passagem com o mouse e depois pressione CTRL:</p>
+                <div id="tsk"></div>
+            </aside>
+        </div>
+
+        <footer id="foot"><p><b>Bíblia Almeida Corrigida Fiel - ACF</b></p></footer>
+    </div>
+
+    <script src="acf.js"></script>
+    <script src="tsk.js"></script>
+
+</body>
+</html>
+
+<!-- Autor: Hélio Giroto = https://github.com/HelioGiroto -->
