@@ -192,7 +192,7 @@
                 document.getElementById("passagem").innerHTML = document.getElementById("opcao").value + " " + cp + ":" + vs; // título da psssagem   
                 document.getElementById("aqui").innerHTML = livro[cp][vs];
             }
-        };
+        }; 
 
         function prox() {
             cp++;
@@ -220,7 +220,7 @@
 
             var regex = new RegExp("\\b" + consulta + "\\b", 'gi');
 
-            versiculos.forEach(function(item, nro) {
+            bibliaACF.forEach(function(item, nro) {
                 if (item[1].match(regex)) {
                     item = item.join(" - ");
                     ocorrencias.push(item);
@@ -229,7 +229,7 @@
         };
 
         function buscarFrase() {
-            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de versiculos do arq acf.js!!!)
+            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaACF do arq acf.js!!!)
             ocorrencias = []; // esvazia o array ocorrencias, pq vai receber novos valores...
             palavra = palavra.slice(1); // corta o primeira palavra da frase, pq já que foi pesquisada.
             consulta = palavra[0]; // e pega a próxima palavra (que se torna a núm 0)
@@ -312,7 +312,7 @@
                 document.getElementById("passagem").innerHTML = livro + " " + cp + ":" + vs;
                 passagem = document.getElementById("passagem").innerHTML;
                 var regex = new RegExp("\\b" + passagem + "\\b", 'gi');
-                versiculos.forEach(function(item, nro) {
+                bibliaACF.forEach(function(item, nro) {
                     if (item[0].match(regex)) {
                         item = item.join(" - ");
                         document.getElementById("aqui").innerHTML = item;
