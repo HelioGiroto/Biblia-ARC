@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Bíblia ACF</title>
+    <title>Bíblia ARC</title>
     <style>
         * {
             box-sizing: border-box;
@@ -157,9 +157,12 @@
     </style>
 
     <script>
+        let cp, vs, livro
+        let ocorrencias = []
+
         function defineLivro() { // Essa função abre o arq.js correspondente apenas do livro solicitado.
             livro = document.getElementById("opcao").value;
-            var script = document.createElement('script');
+            let script = document.createElement('script');
             script.src = livro + '.js';
             document.head.appendChild(script);
             // cp = 0;
@@ -167,7 +170,7 @@
 
         function inicio() {
             cp = parseInt(document.getElementById("capit")
-            .value); // Não coloquei var antes das variáveis aqui p/ que fossem variávisl GLOBAIS!
+            .value);
             vs = parseInt(document.getElementById("vs").value);
             mostrar();
         };
@@ -222,7 +225,7 @@
                 consulta = " " + consulta;
             }
 
-            var regex = new RegExp("\\b" + consulta + "\\b", 'gi');
+            let regex = new RegExp("\\b" + consulta + "\\b", 'gi');
 
             bibliaACF.forEach(function (item, nro) {
                 if (item[1].match(regex)) {
@@ -233,8 +236,7 @@
         };
 
         function buscarFrase() {
-            filtrados =
-            ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaACF do arq acf.js!!!)
+            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaACF do arq acf.js!!!)
             ocorrencias = []; // esvazia o array ocorrencias, pq vai receber novos valores...
             palavra = palavra.slice(1); // corta o primeira palavra da frase, pq já que foi pesquisada.
             consulta = palavra[0]; // e pega a próxima palavra (que se torna a núm 0)
@@ -244,7 +246,7 @@
                 consulta = " " + consulta;
             }
 
-            var regex = new RegExp("\\b" + consulta + "\\b", 'gi');
+            let regex = new RegExp("\\b" + consulta + "\\b", 'gi');
 
             qtasAchou = filtrados.length;
             for (x = 0; x < qtasAchou; x++) {
@@ -254,9 +256,9 @@
 
         function finaliza() {
             document.getElementById("resultado").style.backgroundColor = "white";
-            var qtde = ocorrencias.length;
+            let qtde = ocorrencias.length;
             // Abaixo declara de novo a vaiável pq na funçao consultar() sofre muitas modificações. Replace caso tenha ponto, +, *, ^ (regex):
-            var palavra = document.getElementById("consulta").value.replace('.', '').replace('^', '').replace('*', '')
+            let palavra = document.getElementById("consulta").value.replace('.', '').replace('^', '').replace('*', '')
                 .replace('+', '');
             document.getElementById("resultado").innerHTML = "<h3><strong>Encontrado em " + qtde +
                 " versículo(s):</strong></h3><hr>" + ocorrencias.join(" <br>").replace(new RegExp(palavra, 'gi'),
@@ -296,8 +298,8 @@
 
         function xref() {
             referencias = [];
-            var passagem = document.getElementById("passagem").innerHTML;
-            var regex = new RegExp("\\b" + passagem + "\\b");
+            let passagem = document.getElementById("passagem").innerHTML;
+            let regex = new RegExp("\\b" + passagem + "\\b");
             tsk.forEach(function (item, nro) {
                 if (item[0].match(regex)) {
                     item = item.join(" - "); // O primeiro array (sub-array) é unido (juntado) com um hifen
@@ -314,11 +316,11 @@
                 livroAnterior = document.getElementById("opcao")
                 .value; // Faz uma "cópia" do livro que estava aberto para ao sair dessa função, ele volte para lá!!!
                 capAnterior = document.getElementById("capit").value; // Faz "cópia" do capítulo que estava....
-                var copiado = document.getSelection().toString().trim(); // Pega a seleção...
+                let copiado = document.getSelection().toString().trim(); // Pega a seleção...
                 fatia = copiado.split(" "); // "corta" em uma array...
                 livro = fatia[0]; // pega a primeiro membro do array que é o nome do livro.
 
-                var script = document.createElement('script'); // Abre o livro
+                let script = document.createElement('script'); // Abre o livro
                 script.src = livro + '.js';
                 document.head.appendChild(script);
 
@@ -328,7 +330,7 @@
 
                 document.getElementById("passagem").innerHTML = livro + " " + cp + ":" + vs;
                 passagem = document.getElementById("passagem").innerHTML;
-                var regex = new RegExp("\\b" + passagem + "\\b", 'gi');
+                let regex = new RegExp("\\b" + passagem + "\\b", 'gi');
                 bibliaACF.forEach(function (item, nro) {
                     if (item[0].match(regex)) {
                         item = item.join(" - ");
