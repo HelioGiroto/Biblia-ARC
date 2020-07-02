@@ -157,7 +157,7 @@
     </style>
 
     <script>
-        let cp, vs, livro
+        let cp, vs
         let ocorrencias = []
 
         function defineLivro() { // Essa função abre o arq.js correspondente apenas do livro solicitado.
@@ -169,8 +169,7 @@
         };
 
         function inicio() {
-            cp = parseInt(document.getElementById("capit")
-            .value);
+            cp = parseInt(document.getElementById("capit").value);
             vs = parseInt(document.getElementById("vs").value);
             mostrar();
         };
@@ -227,7 +226,7 @@
 
             let regex = new RegExp("\\b" + consulta + "\\b", 'gi');
 
-            bibliaACF.forEach(function (item, nro) {
+            bibliaARC.forEach(function (item, nro) {
                 if (item[1].match(regex)) {
                     item = item.join(" - ");
                     ocorrencias.push(item);
@@ -236,7 +235,7 @@
         };
 
         function buscarFrase() {
-            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaACF do arq acf.js!!!)
+            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaARC do arq acf.js!!!)
             ocorrencias = []; // esvazia o array ocorrencias, pq vai receber novos valores...
             palavra = palavra.slice(1); // corta o primeira palavra da frase, pq já que foi pesquisada.
             consulta = palavra[0]; // e pega a próxima palavra (que se torna a núm 0)
@@ -277,8 +276,7 @@
             // ^Jesus (que começa com Jesus)
             // just.* (derivados: justo, justiça, justificados...)
 
-            palavra = document.getElementById("consulta").value
-            .toLowerCase() // captura o que foi digitado no formulário
+            palavra = document.getElementById("consulta").value.toLowerCase() // captura o que foi digitado no formulário
             if (palavra.indexOf(" ") > 0) { // se tem algum espaço a partir da posição 1 (>0...) é pq é frase!
                 palavra = palavra.split(" "); // então faz da palavra buscada um array
                 qtasPalavras = palavra
@@ -297,12 +295,12 @@
         };
 
         function xref() {
-            referencias = [];
+            let referencias = [];
             let passagem = document.getElementById("passagem").innerHTML;
             let regex = new RegExp("\\b" + passagem + "\\b");
             tsk.forEach(function (item, nro) {
                 if (item[0].match(regex)) {
-                    item = item.join(" - "); // O primeiro array (sub-array) é unido (juntado) com um hifen
+                    item = item.join(" - ");        // O primeiro array (sub-array) é unido (juntado) com um hifen
                     referencias.push(item);
                 }
             });
@@ -311,13 +309,13 @@
         };
 
         function abreVs(event) {
-            //  Se pressionar CTRL:
-            if (event.keyCode == 17) {
-                livroAnterior = document.getElementById("opcao")
-                .value; // Faz uma "cópia" do livro que estava aberto para ao sair dessa função, ele volte para lá!!!
-                capAnterior = document.getElementById("capit").value; // Faz "cópia" do capítulo que estava....
+            //  Se pressionar ALT:
+            if (event.keyCode == 18) {
+                console.log('abreVs function')
+                let livroAnterior = document.getElementById("opcao").value; // Faz uma "cópia" do livro que estava aberto para ao sair dessa função, ele volte para lá!!!
+                let capAnterior = document.getElementById("capit").value; // Faz "cópia" do capítulo que estava....
                 let copiado = document.getSelection().toString().trim(); // Pega a seleção...
-                fatia = copiado.split(" "); // "corta" em uma array...
+                let fatia = copiado.split(" "); // "corta" em uma array...
                 livro = fatia[0]; // pega a primeiro membro do array que é o nome do livro.
 
                 let script = document.createElement('script'); // Abre o livro
@@ -331,7 +329,7 @@
                 document.getElementById("passagem").innerHTML = livro + " " + cp + ":" + vs;
                 passagem = document.getElementById("passagem").innerHTML;
                 let regex = new RegExp("\\b" + passagem + "\\b", 'gi');
-                bibliaACF.forEach(function (item, nro) {
+                bibliaARC.forEach(function (item, nro) {
                     if (item[0].match(regex)) {
                         item = item.join(" - ");
                         document.getElementById("aqui").innerHTML = item;
@@ -474,7 +472,7 @@
                     <button class="ref" type="button" onclick="xref()">Ver Refs.</button>
                 </center>
                 <p id="obsTsk"><strong>(Para ler os versículos abaixo) </strong><br>Marque uma passagem com o mouse e
-                    depois pressione CTRL:</p>
+                    depois pressione ALT:</p>
                 <div id="tsk"></div>
             </aside>
         </div>
