@@ -148,7 +148,7 @@ footer {
     padding: 5px;
 }
 
-#gotop {
+img#gotop {
     display: none;
 }
 
@@ -219,7 +219,7 @@ footer {
         display: none;
     }
 
-    #gotop {
+    img#gotop {
         display: none;
         position: fixed;
         bottom: 25px;
