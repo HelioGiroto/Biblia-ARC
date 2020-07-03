@@ -1,0 +1,229 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    background-color: #95A5A6;
+}
+
+header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #34495E;
+}
+
+div.areaLogo {
+    text-align: center;
+    color: #F1C40F;
+}
+
+div.areaConsulta {
+    width: 60%;
+}
+
+input.barraConsulta {
+    margin: 5px;
+    padding: 2px;
+    width: 80%;
+    font-size: 1.3em;
+    color: gray;
+}
+
+button.busca {
+    padding: 1.5px;
+    font-size: 1.3em;
+    background-color: slategray;
+    color: white;
+    padding: 0 10px;
+}
+
+div.menu {
+    width: 10%;
+}
+
+div.meio {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+section {
+    width: 100%;
+    padding: 20px;
+    padding-top: 40px;
+}
+
+div#escolha {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+select {
+    padding: 5px 15px;
+    font-size: 1.2em;
+    margin: 0 5px;
+}
+
+label {
+    font-size: 1.2em;
+    margin: 0 5px;
+    vertical-align: middle;
+    padding-top: 5px;
+}
+
+.formtxt {
+    width: 90px;
+    padding: 5px 0;
+    margin: 0 5px;
+    font-size: 1.2em;
+}
+
+button.passagem {
+    padding: 4px 25px;
+    vertical-align: bottom;
+    font-size: 1.1em;
+    margin: 0 5px;
+    background-color: slategray;
+    color: white;
+}
+
+div#prox-ant {
+    display: none;
+}
+
+button.prox-ant {
+    margin-top: 5px;
+    font-size: 1.2em;
+    padding: 5px 5px;
+}
+
+#aqui {
+    font-size: 1.3em;
+    padding-right: 5px;
+}
+
+#resultado {
+    font-size: 1.1em;
+    padding: 20px;
+}
+
+aside#xref {
+    display: none;
+    min-height: 100vh;
+    width: 40%;
+    background-color: whitesmoke;
+    padding: 30px 15px;
+}
+
+button.ref {
+    margin: 7px 0;
+    background-color: slategray;
+    color: white;
+    padding: 5px;
+}
+
+#tsk {
+    font-size: 1.2em;
+    padding: 5px 0;
+    margin-top: 10px;
+}
+
+#obsTsk {
+    font-size: 0.7em;
+    text-align: center;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #34495E;
+    color: aliceblue;
+    font-size: 0.8em;
+    text-align: center;
+    padding: 5px;
+}
+
+div.gotop {
+    display: none;
+}
+
+@media only screen and (max-width: 750px) {
+    header {
+        justify-content: center;
+    }
+
+    div {
+        margin-top: 5px;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+
+    div.areaSelect {
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    #opcao {
+        margin: auto;
+        width: 80%;
+    }
+
+    div#escolha {
+        flex-flow: column wrap;
+    }
+
+/*
+    input.barraConsulta{
+        font-size: 1em;
+    }
+*/
+    button.busca{
+        width: 50%;
+        margin-top: 5px;
+    }
+
+    label{
+        text-align: center;
+    }
+
+    input#capit, #vs {
+        margin: auto;
+        width: 80%;
+    }
+
+    div.areaConsulta {
+        width: 98%;
+    }
+
+    div.meio {
+        flex-flow: column nowrap;
+    }
+
+    button.passagem {
+        margin: auto;
+        margin-top: 10px;
+        width: 80%;
+    }
+
+    aside#xref {
+        width: 100%;
+    }
+
+    #obsTsk{
+        display: none;
+    }
+
+    #gotop {
+        display: none;
+        position: fixed;
+        bottom: 25px;
+        right: 5px;
+        z-index: 100;
+    }
+}

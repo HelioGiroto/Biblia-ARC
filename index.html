@@ -4,166 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>Bíblia ARC</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-        }
-
-        body {
-            background-color: #95A5A6;
-        }
-
-        header {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: space-around;
-            padding: 10px;
-            background-color: #34495E;
-        }
-
-        div.areaLogo {
-            text-align: center;
-            color: #F1C40F;
-        }
-
-        div.areaConsulta {
-            width: 60%;
-        }
-
-        input.barraConsulta {
-            margin: 5px;
-            padding: 2px;
-            width: 80%;
-            font-size: 1.3em;
-            color: gray;
-        }
-
-        button.busca {
-            padding: 1.5px;
-            font-size: 1.3em;
-            background-color: slategray;
-            color: white;
-            padding: 0 10px;
-        }
-
-        div.menu {
-            width: 10%;
-        }
-
-        div.meio {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: center;
-        }
-
-        section {
-            width: 100%;
-            padding: 20px;
-            padding-top: 40px;
-        }
-
-        #escolha {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: center;
-        }
-
-        select {
-            padding: 5px 15px;
-            font-size: 1.2em;
-            margin: 0 5px;
-        }
-
-        label {
-            font-size: 1.2em;
-            margin: 0 5px;
-            vertical-align: middle;
-            padding-top: 5px;
-        }
-
-        .formtxt {
-            width: 90px;
-            padding: 5px 0;
-            margin: 0 5px;
-            font-size: 1.2em;
-        }
-
-        button.passagem {
-            padding: 4px 25px;
-            vertical-align: bottom;
-            font-size: 1.1em;
-            margin: 0 5px;
-            background-color: slategray;
-            color: white;
-        }
-
-        div#prox-ant {
-            display: none;
-        }
-
-        button.prox-ant {
-            margin-top: 5px;
-            font-size: 1.2em;
-            padding: 5px 5px;
-        }
-
-        #aqui {
-            font-size: 1.3em;
-            padding-right: 5px;
-        }
-
-        #resultado {
-            font-size: 1.1em;
-            padding: 20px;
-        }
-
-        aside#xref {
-            display: none;
-            min-height: 100vh;
-            width: 40%;
-            background-color: whitesmoke;
-            padding: 30px 15px;
-        }
-
-        button.ref {
-            margin: 7px 0;
-            background-color: slategray;
-            color: white;
-            padding: 5px;
-        }
-
-        #tsk {
-            font-size: 1.2em;
-            padding: 5px 0;
-            margin-top: 10px;
-        }
-
-        #obsTsk {
-            font-size: 0.7em;
-            text-align: center;
-        }
-
-        footer {
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            background-color: #34495E;
-            color: aliceblue;
-            font-size: 0.8em;
-            text-align: center;
-            padding: 5px;
-        }
-    </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Helio Giroto">
+    <link rel="stylesheet" href="estilos.css">
     <script>
         let cp, vs
         let ocorrencias = []
 
         function defineLivro() { // Essa função abre o arq.js correspondente apenas do livro solicitado.
-            livro = document.getElementById("opcao").value;
+            let Livro = document.getElementById("opcao").value;
             let script = document.createElement('script');
-            script.src = livro + '.js';
+            script.src = Livro + '.js';
             document.head.appendChild(script);
             // cp = 0;
         };
@@ -171,6 +22,7 @@
         function inicio() {
             cp = parseInt(document.getElementById("capit").value);
             vs = parseInt(document.getElementById("vs").value);
+            defineLivro()
             mostrar();
         };
 
@@ -189,7 +41,7 @@
                 document.getElementById("passagem").innerHTML = "Introdução do livro: "; // título
             } else if (isNaN(vs) || vs == 0) { // em vez de vs era: passagem[1]
                 document.getElementById("passagem").innerHTML = document.getElementById("opcao").value + " " +
-                cp; // título da psssagem
+                    cp; // título da psssagem
                 document.getElementById("aqui").innerHTML = livro[cp].join("</li><li>");
             } else {
                 document.getElementById("passagem").innerHTML = document.getElementById("opcao").value + " " + cp +
@@ -235,7 +87,8 @@
         };
 
         function buscarFrase() {
-            filtrados = ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaARC do arq acf.js!!!)
+            filtrados =
+                ocorrencias; // filtrados são os vs. que estavam em ocorrências (que provinham de bibliaARC do arq acf.js!!!)
             ocorrencias = []; // esvazia o array ocorrencias, pq vai receber novos valores...
             palavra = palavra.slice(1); // corta o primeira palavra da frase, pq já que foi pesquisada.
             consulta = palavra[0]; // e pega a próxima palavra (que se torna a núm 0)
@@ -264,7 +117,7 @@
                     '<b>' + palavra + '</b>'); // 'g' - para replace todas ocorrências... antes era:
             // ...replace(consulta, '<b>' + consulta + '</b>');
             document.getElementById('resultado')
-        .scrollIntoView(); // Rola página até o id onde está o resultado da consulta...
+                .scrollIntoView(); // Rola página até o id onde está o resultado da consulta...
         };
 
         function consultar() { // Aqui é disparado ao pressionar o botão BUSCAR de consultar:
@@ -276,17 +129,18 @@
             // ^Jesus (que começa com Jesus)
             // just.* (derivados: justo, justiça, justificados...)
 
-            palavra = document.getElementById("consulta").value.toLowerCase() // captura o que foi digitado no formulário
+            palavra = document.getElementById("consulta").value
+                .toLowerCase() // captura o que foi digitado no formulário
             if (palavra.indexOf(" ") > 0) { // se tem algum espaço a partir da posição 1 (>0...) é pq é frase!
                 palavra = palavra.split(" "); // então faz da palavra buscada um array
                 qtasPalavras = palavra
-                .length; // calcula qtas palavras há nessa frase para saber qtos loops realizará para chamar a função buscarFrase().
+                    .length; // calcula qtas palavras há nessa frase para saber qtos loops realizará para chamar a função buscarFrase().
                 consulta = palavra[0]; // começa da primeira palavra da frase, i é., a palavra[0]
                 buscarPalavra(); // então abre função de buscar apenas uma palavra.
                 for (ciclo = 2; ciclo <= qtasPalavras; ciclo++)
-            buscarFrase(); // Retornará à função buscaFrase() o nro de vezes de palavras contidas na frase que o usuário digitou no formulário em HTML!!! (Uma espécie de GOTO manual!)
+                    buscarFrase(); // Retornará à função buscaFrase() o nro de vezes de palavras contidas na frase que o usuário digitou no formulário em HTML!!! (Uma espécie de GOTO manual!)
                 finaliza
-            (); // Terminado de ir X vezes à função buscaFrase(), agora terminará o programa indo à finaliza().
+                    (); // Terminado de ir X vezes à função buscaFrase(), agora terminará o programa indo à finaliza().
             } else { // Caso no tenha uma frase, mas apenas uma palavra se tenha digitado para buscar.
                 consulta = palavra;
                 buscarPalavra();
@@ -300,19 +154,20 @@
             let regex = new RegExp("\\b" + passagem + "\\b");
             tsk.forEach(function (item, nro) {
                 if (item[0].match(regex)) {
-                    item = item.join(" - ");        // O primeiro array (sub-array) é unido (juntado) com um hifen
+                    item = item.join(" - "); // O primeiro array (sub-array) é unido (juntado) com um hifen
                     referencias.push(item);
                 }
             });
             document.getElementById("tsk").innerHTML = "<p>" + referencias.join("<hr><br>") +
-            "</p>"; // O 2°array (o array-linha) é unido por <hr> 
+                "</p>"; // O 2°array (o array-linha) é unido por <hr> 
         };
 
         function abreVs(event) {
             //  Se pressionar ALT:
             if (event.keyCode == 18) {
                 console.log('abreVs function')
-                let livroAnterior = document.getElementById("opcao").value; // Faz uma "cópia" do livro que estava aberto para ao sair dessa função, ele volte para lá!!!
+                let livroAnterior = document.getElementById("opcao")
+                    .value; // Faz uma "cópia" do livro que estava aberto para ao sair dessa função, ele volte para lá!!!
                 let capAnterior = document.getElementById("capit").value; // Faz "cópia" do capítulo que estava....
                 let copiado = document.getSelection().toString().trim(); // Pega a seleção...
                 let fatia = copiado.split(" "); // "corta" em uma array...
@@ -337,7 +192,7 @@
                 });
                 document.getElementById('topo').scrollIntoView(); // Rola página até o topo da página...
                 document.getElementById("opcao").value =
-                livroAnterior; // restaura o valor do nome do livro que estava aberto antes de abreVs();
+                    livroAnterior; // restaura o valor do nome do livro que estava aberto antes de abreVs();
                 cp = capAnterior; // restaura o valor do cap. que estava antes.
                 defineLivro(); // Abrirá o livro que esteja em valor #opcao (id) - i.é, de livroAnterior !!!
             }
@@ -366,7 +221,7 @@
         <div class="meio">
             <section>
                 <div class="escolha" id="escolha">
-                    <div>
+                    <div class="areaSelect">
                         <select id="opcao" onchange="defineLivro()">
                             <option value="">Escolha um livro...</option>
                             <option value="Gn">Gênesis</option>
@@ -441,8 +296,12 @@
                     <div>
                         <label>Capítulo: </label>
                         <input class="formtxt" id="capit" type="text" />
+                    </div>
+                    <div>
                         <label>Versículo: </label>
                         <input class="formtxt" id="vs" type="text" />
+                    </div>
+                    <div>
                         <button class="passagem" type="button" onclick="inicio()">Abre!</button>
                     </div>
                 </div>
@@ -477,6 +336,8 @@
             </aside>
         </div>
 
+        <img src="./gotop.png" id='gotop' alt="Vá para o topo" width="20%">
+
         <footer id="foot">
             <p><b>Bíblia Almeida Revista Corrigida - ARC</b></p>
         </footer>
@@ -484,6 +345,27 @@
 
     <script src="acf.js"></script>
     <script src="tsk.js"></script>
+
+    <script>
+        function scrollFunction() {
+            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                document.querySelector('#gotop').style.display = "block";
+            } else {
+                document.querySelector('#gotop').style.display = "none";
+            }
+        }
+        
+        window.onscroll = function () {
+            scrollFunction()
+        };
+        
+        function sobeTopo() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        document.querySelector('#gotop').addEventListener('click', sobeTopo)
+    </script>
 
 </body>
 
