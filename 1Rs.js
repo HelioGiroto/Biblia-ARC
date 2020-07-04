@@ -1,4 +1,4 @@
-let livro = [["Intro"],
+livro = [["Intro"],
 [[" "],
 ["Sendo, pois, o rei Davi já velho, e entrado em dias, cobriam-no de roupas, porém não se aquecia. "],
 ["Então disseram-lhe os seus servos: Busquem para o rei meu senhor uma moça virgem, que esteja perante o rei, e tenha cuidado dele; e durma no seu seio, para que o rei meu senhor se aqueça. "],

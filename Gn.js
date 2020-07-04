@@ -1,4 +1,4 @@
-let livro = [["Intro"],
+livro = [["Intro"],
 [[" "],
 ["No princípio criou Deus os céus e a terra."],
 ["E a terra era sem forma e vazia; e havia trevas sobre a face do abismo; e o Espírito de Deus se movia sobre a face das águas."],
